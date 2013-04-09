@@ -1,1 +1,3 @@
-a collection of mac scripts
+# Mac Scripts
+
+A work-in-progress collection of mac scripts
