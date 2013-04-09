@@ -1,2 +1,1 @@
-# a collection of Mac scripts
-# work in progress
+a collection of mac scripts
