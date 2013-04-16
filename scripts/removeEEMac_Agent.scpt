@@ -8,4 +8,4 @@ tell application "Terminal"
 	else
 		do script command in first window
 	end if
-end tell
+end tell 
