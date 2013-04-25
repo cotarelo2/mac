@@ -20,9 +20,7 @@ When troubleshooting with a user/customer or onsite technician, there is little 
 5. Improve 'Restart McAfee Services' task
 
 #Acknowledgements and References
-1. ePO Packaging Tutorial 
-- Clif Hirtle 
-- https://docs.google.com/document/d/1fKThl5TbH20SHAfgzwUKGhVqO9AguUqzExLSMloSkuE/edit?usp=sharing
+1. ePO Packaging Tutorial -- Clif Hirtle -- https://docs.google.com/document/d/1fKThl5TbH20SHAfgzwUKGhVqO9AguUqzExLSMloSkuE/edit?usp=sharing
 2. Special thanks to Shane Stanley and Stefan Klieme
 
 #Version History
