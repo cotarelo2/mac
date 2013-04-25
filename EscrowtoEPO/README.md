@@ -13,14 +13,13 @@ See the references section for more info on these projects.
 EscrowtoEPO is an ApplescriptObjC application that allows the a user to enable FileVault 2 full-disk encryption, and provides a mechanism (the application's function) to synchronize the recovery key as a custom machine property back to your McAfee ePO environment. This ensures that the recovery key safely resides on a system built for retaining security policies and other client security information and allows enterprises the ability to leverage Apple's FDE solution. The recovery key used can be individual, which allows the administrator the ability to manage a recovery key that is different for every machine. In environments where users are administrators, once FileVault 2 is enabled users can manage additional users added to the machine via System Preferences. In non-users-as-admins environments, the usage of configuration profiles can assist administrators in deploying encrypted systems in this manner.
 
 #PreRequisites/Requirements
-McAfee's ePO product (environment infrastructure and client)
-OS X Mountain Lion 10.8
+1. McAfee's ePO product (environment infrastructure and client)
+2. OS X Mountain Lion 10.8
 
 #Future Enhancements
-Convert to ObjC/ARC (application currently uses GCC memory management with ASOC)
-Inclusion of NSPopover element for user information tasks
-Improved text validation of user input fields
---potentially have users validated or read from "dscl task at first launch"
+1. Convert to ObjC/ARC (application currently uses GCC memory management with ASOC)
+2. Inclusion of NSPopover element for user information tasks
+3. Improved text validation of user input fields--potentially have users validated or read from "dscl task at first launch"
 
 #Acknowledgements and References
 1. Documentation of FV2 Encryption configuration options 
