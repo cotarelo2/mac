@@ -1,0 +1,316 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		010C07D7172CE2B600E55607 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 010C07D6172CE2B600E55607 /* Cocoa.framework */; };
+		010C07D9172CE2B600E55607 /* AppleScriptObjC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 010C07D8172CE2B600E55607 /* AppleScriptObjC.framework */; };
+		010C07E3172CE2B600E55607 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 010C07E1172CE2B600E55607 /* InfoPlist.strings */; };
+		010C07E5172CE2B600E55607 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 010C07E4172CE2B600E55607 /* main.m */; };
+		010C07E9172CE2B600E55607 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 010C07E7172CE2B600E55607 /* Credits.rtf */; };
+		010C07EB172CE2B600E55607 /* loyaltyarmAppDelegate.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 010C07EA172CE2B600E55607 /* loyaltyarmAppDelegate.applescript */; };
+		010C07EE172CE2B600E55607 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 010C07EC172CE2B600E55607 /* MainMenu.xib */; };
+		0121F732172CF0810096841F /* e2e.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0121F731172CF0810096841F /* e2e.icns */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		010C07D3172CE2B600E55607 /* E2E.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = E2E.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		010C07D6172CE2B600E55607 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		010C07D8172CE2B600E55607 /* AppleScriptObjC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleScriptObjC.framework; path = System/Library/Frameworks/AppleScriptObjC.framework; sourceTree = SDKROOT; };
+		010C07DB172CE2B600E55607 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		010C07DC172CE2B600E55607 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		010C07DD172CE2B600E55607 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		010C07E0172CE2B600E55607 /* E2E-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "E2E-Info.plist"; sourceTree = "<group>"; };
+		010C07E2172CE2B600E55607 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		010C07E4172CE2B600E55607 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		010C07E6172CE2B600E55607 /* E2E-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "E2E-Prefix.pch"; sourceTree = "<group>"; };
+		010C07E8172CE2B600E55607 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		010C07EA172CE2B600E55607 /* loyaltyarmAppDelegate.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = loyaltyarmAppDelegate.applescript; sourceTree = "<group>"; };
+		010C07ED172CE2B600E55607 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		0121F731172CF0810096841F /* e2e.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = e2e.icns; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		010C07D0172CE2B600E55607 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				010C07D7172CE2B600E55607 /* Cocoa.framework in Frameworks */,
+				010C07D9172CE2B600E55607 /* AppleScriptObjC.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		010C07CA172CE2B600E55607 = {
+			isa = PBXGroup;
+			children = (
+				0121F731172CF0810096841F /* e2e.icns */,
+				010C07DE172CE2B600E55607 /* E2E */,
+				010C07D5172CE2B600E55607 /* Frameworks */,
+				010C07D4172CE2B600E55607 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		010C07D4172CE2B600E55607 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				010C07D3172CE2B600E55607 /* E2E.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		010C07D5172CE2B600E55607 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				010C07D6172CE2B600E55607 /* Cocoa.framework */,
+				010C07D8172CE2B600E55607 /* AppleScriptObjC.framework */,
+				010C07DA172CE2B600E55607 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		010C07DA172CE2B600E55607 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				010C07DB172CE2B600E55607 /* AppKit.framework */,
+				010C07DC172CE2B600E55607 /* CoreData.framework */,
+				010C07DD172CE2B600E55607 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		010C07DE172CE2B600E55607 /* E2E */ = {
+			isa = PBXGroup;
+			children = (
+				010C07EA172CE2B600E55607 /* loyaltyarmAppDelegate.applescript */,
+				010C07EC172CE2B600E55607 /* MainMenu.xib */,
+				010C07DF172CE2B600E55607 /* Supporting Files */,
+			);
+			path = E2E;
+			sourceTree = "<group>";
+		};
+		010C07DF172CE2B600E55607 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				010C07E0172CE2B600E55607 /* E2E-Info.plist */,
+				010C07E1172CE2B600E55607 /* InfoPlist.strings */,
+				010C07E4172CE2B600E55607 /* main.m */,
+				010C07E6172CE2B600E55607 /* E2E-Prefix.pch */,
+				010C07E7172CE2B600E55607 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		010C07D2172CE2B600E55607 /* E2E */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 010C07F1172CE2B600E55607 /* Build configuration list for PBXNativeTarget "E2E" */;
+			buildPhases = (
+				010C07CF172CE2B600E55607 /* Sources */,
+				010C07D0172CE2B600E55607 /* Frameworks */,
+				010C07D1172CE2B600E55607 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = E2E;
+			productName = E2E;
+			productReference = 010C07D3172CE2B600E55607 /* E2E.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		010C07CB172CE2B600E55607 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = loyaltyarm;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = Nick;
+			};
+			buildConfigurationList = 010C07CE172CE2B600E55607 /* Build configuration list for PBXProject "E2E" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 010C07CA172CE2B600E55607;
+			productRefGroup = 010C07D4172CE2B600E55607 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				010C07D2172CE2B600E55607 /* E2E */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		010C07D1172CE2B600E55607 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				010C07E3172CE2B600E55607 /* InfoPlist.strings in Resources */,
+				010C07E9172CE2B600E55607 /* Credits.rtf in Resources */,
+				010C07EE172CE2B600E55607 /* MainMenu.xib in Resources */,
+				0121F732172CF0810096841F /* e2e.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		010C07CF172CE2B600E55607 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				010C07E5172CE2B600E55607 /* main.m in Sources */,
+				010C07EB172CE2B600E55607 /* loyaltyarmAppDelegate.applescript in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		010C07E1172CE2B600E55607 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				010C07E2172CE2B600E55607 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		010C07E7172CE2B600E55607 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				010C07E8172CE2B600E55607 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		010C07EC172CE2B600E55607 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				010C07ED172CE2B600E55607 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		010C07EF172CE2B600E55607 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		010C07F0172CE2B600E55607 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		010C07F2172CE2B600E55607 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "E2E/E2E-Prefix.pch";
+				INFOPLIST_FILE = "E2E/E2E-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		010C07F3172CE2B600E55607 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "E2E/E2E-Prefix.pch";
+				INFOPLIST_FILE = "E2E/E2E-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		010C07CE172CE2B600E55607 /* Build configuration list for PBXProject "E2E" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				010C07EF172CE2B600E55607 /* Debug */,
+				010C07F0172CE2B600E55607 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		010C07F1172CE2B600E55607 /* Build configuration list for PBXNativeTarget "E2E" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				010C07F2172CE2B600E55607 /* Debug */,
+				010C07F3172CE2B600E55607 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 010C07CB172CE2B600E55607 /* Project object */;
+}
