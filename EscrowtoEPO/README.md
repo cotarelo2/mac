@@ -23,18 +23,18 @@ EscrowtoEPO is an ApplescriptObjC application that allows the a user to enable F
 
 #Acknowledgements and References
 1. Documentation of FV2 Encryption configuration options 
-- Rich Trouton http://derflounder.wordpress.com/
+----Rich Trouton http://derflounder.wordpress.com/
 2. FV2 Escrow to AD/OD scripts and workflows/documentation
-- Christopher Silvertooth http://musings.silvertooth.us/2012/09/filevault-key-escrow-version-2-0-mountain-lion-only/
+----Christopher Silvertooth http://musings.silvertooth.us/2012/09/filevault-key-escrow-version-2-0-mountain-lion-only/
 3. Get User Details (ePO Custom Properties)
-- Patrick Gallagher https://github.com/patgmac/scripts/blob/master/bash/McAfee_getUsersDetails.sh
+----Patrick Gallagher https://github.com/patgmac/scripts/blob/master/bash/McAfee_getUsersDetails.sh
 
 #Version History
 1.0
 Initial Release
 
 #License
-Copyright 2013 Nick Cobb
+Copyright 2013 Nick Cobb (loyaltyarm@gmail.com)
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
        
