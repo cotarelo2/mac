@@ -269,9 +269,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_ENABLE_OBJC_GC = required;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "E2E/E2E-Prefix.pch";
 				INFOPLIST_FILE = "E2E/E2E-Info.plist";
+				OSACOMPILE_EXECUTE_ONLY = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -281,9 +283,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				GCC_ENABLE_OBJC_GC = required;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "E2E/E2E-Prefix.pch";
 				INFOPLIST_FILE = "E2E/E2E-Info.plist";
+				OSACOMPILE_EXECUTE_ONLY = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
