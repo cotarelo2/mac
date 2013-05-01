@@ -1,4 +1,4 @@
-#EscrowtoEPO (E2E)
+>#EscrowtoEPO (E2E)
 
 #Introduction
 EscrowtoEPO is a project born out of the behavioral inconsistency of McAfee's EEMac FDE solution in (my) enterprise. McAfee's EEMac FDE product is somewhat incomplete in its feature-set, specifically requiring an enterprise to blocok software updates to encrypted Macs in order to maintain the integrity of the encryption product. It combines information shared across the Mac Enterprise community of administrators regarding the escrow of FileVault recovery keys to existing enterprise systems. EscrowtoEPO combines two ideas specifically:
