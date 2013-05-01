@@ -29,6 +29,7 @@ pacfile="yourcompany.autoproxy.urlhere"
 
 Eth="Ethernet"
 Eth1="USB Ethernet"
+Eth2="Thunderbolt Ethernet"
 Wi="Wi-Fi"
 #################################################
 
@@ -68,6 +69,25 @@ networksetup -setproxyautodiscovery "${Eth1}" off
 networksetup -setautoproxyurl "${Eth1}" "${pacfile}" | echo USB Ethernet Completed
 else
 echo "There is not a service for "${Eth1}" no need to set the proxy"
+fi
+
+echo
+echo Checking Thunderbolt Ethernet...
+sleep 1
+if
+networksetup -listallnetworkservices | grep "${Eth2}"
+then
+networksetup -setgopherproxystate "${Eth2}" off
+networksetup -setstreamingproxystate "${Eth2}" off
+networksetup -setsocksfirewallproxystate "${Eth2}" off
+networksetup -setftpproxystate "${Eth2}" off
+networksetup -setsecurewebproxystate "${Eth2}" off
+networksetup -setwebproxystate "${Eth2}" off
+networksetup -setautoproxystate "${Eth2}" off
+networksetup -setproxyautodiscovery "${Eth2}" off
+networksetup -setautoproxyurl "${Eth2}" "${pacfile}" | echo Ethernet Completed
+else
+echo "There is not a service for "${Eth2}" no need to set the proxy"
 fi
 
 echo
