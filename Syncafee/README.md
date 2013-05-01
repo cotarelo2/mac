@@ -1,4 +1,4 @@
-#Syncafee
+>#Syncafee
 
 #Introduction
 Syncafee seeks to aid Mac administrators deploying McAfee's ePO/FDE-(EEMac) products to client Apple computers OS Version 10.7 or above. Syncafee provides the client (or less-experienced Mac user) with an all-inclusive interface by which to deploy/assist/troubleshoot with command-line management tasks. The ePO and FDE products supplied by McAfee deploy separately, and provide only command-line functionality for performing synchronization tasks to the server. Moreover, the FDE (EEMac) product is deployed through the synchronization and server-queuing of ePO policy to encrypt the hard disk of a client Mac.
