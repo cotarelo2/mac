@@ -37,8 +37,8 @@ EscrowtoEPO is an ApplescriptObjC application that allows the a user to enable F
 Initial Release
 
 1.1
-1. Application packaged
-2. Addition of FV2 Status scripts assigned as LaunchDaemon to report on the status (RunAtLoad and Once every 24 hours)
+--Application packaged
+--Addition of FV2 Status scripts assigned as LaunchDaemon to report on the status (RunAtLoad and Once every 24 hours)
 
 #License
 Copyright 2013 Nick Cobb (contact - loyaltyarm@gmail.com)
