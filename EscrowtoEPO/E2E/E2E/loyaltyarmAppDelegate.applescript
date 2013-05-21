@@ -20,6 +20,7 @@ script loyaltyarmAppDelegate
     property theWindow : missing value
     
     -- property declaration for recovery plist directory
+    property secureDir : missing value
     property plistDir : missing value
     property appDir : missing value
     property vaultMaster : missing value
@@ -42,12 +43,12 @@ script loyaltyarmAppDelegate
         try
             do shell script "chmod 777 /Library/McAfee/cma/scratch/" with administrator privileges
             on error
-            log "EscrowtoEPO is unable to change permissions for " & epoFile
+            log "EscrowtoEPO (launching) is unable to change permissions for " & epoFile
         end try
         try
-            do shell script "chmod 777 /Library/McAfee/cma/scratch/etc/" with administrator privileges
+            do shell script "chmod 755 /Library/McAfee/cma/scratch/etc/" with administrator privileges
             on error
-            log "EscrowtoEPO is unable to change permissions for " & epoFile
+            log "EscrowtoEPO (launching) is unable to change permissions for " & epoFile
         end try
         tell current application's class "NSBundle"
             tell its mainBundle()
@@ -57,7 +58,8 @@ script loyaltyarmAppDelegate
         -- Begin check for /Library/YourCompany folder
         tell current application
             set appDir to "/Library/YourCompany"
-            set plistDir to "/Library/YourCompany/InfoSec.plist"
+            set plistDir to "/Library/YourCompany/recoverykey.plist"
+            set secureDir to "/usr/local/recoverykeyfailover.plist"
             try
                 do shell script "mkdir " & appDir with administrator privileges
                 on error
@@ -103,7 +105,7 @@ script loyaltyarmAppDelegate
                 end if
             end tell
             log "E2E found " & vaultCert & ". Please remove this file to continue."
-            on error
+        on error
             log "E2E did not seem to find a FVMaster Cert file. Again, we are proceeding with care."
         end try
 	end applicationWillFinishLaunching_
@@ -136,7 +138,7 @@ script loyaltyarmAppDelegate
             my fvStatus's setTextColor_(current application's NSColor's redColor)
             my fvStatus's setStringValue_("You must enter a username!")
             -- IF NO PASSWORD ENTERED THEN ERROR AND FAILURE
-            else if passValue's |length|() is 0 then
+        else if passValue's |length|() is 0 then
             log "No password was entered."
             tell current application's NSAlert to set theAlert to alloc()'s init()
             tell theAlert
@@ -149,7 +151,7 @@ script loyaltyarmAppDelegate
             theWindow's displayIfNeeded()
             my fvStatus's setTextColor_(current application's NSColor's redColor)
             my fvStatus's setStringValue_("You must enter a password!")
-            else
+        else
             spinnerBro's startAnimation_(spinnerBro)
             theWindow's displayIfNeeded()
             my fvStatus's setTextColor_(current application's NSColor's blackColor)
@@ -169,7 +171,7 @@ script loyaltyarmAppDelegate
                 log "User selected Register"
                 spinnerBro's stopAnimation_(spinnerBro)
                 regButton_(me)
-                else if theButton as integer = current application's NSAlertSecondButtonReturn as integer then
+            else if theButton as integer = current application's NSAlertSecondButtonReturn as integer then
                 log "User selected Continue"
                 try
                     log "Encryption being enabled for user -- " & (stringValue() of userEntry)
@@ -199,7 +201,7 @@ script loyaltyarmAppDelegate
                         theWindow's displayIfNeeded()
                         my fvStatus's setTextColor_(current application's NSColor's redColor)
                         my fvStatus's setStringValue_("There was an error enabling encryption!")
-                        else
+                    else
                         theWindow's displayIfNeeded()
                         my fvStatus's setTextColor_(current application's NSColor's blackColor)
                         my fvStatus's setStringValue_("Recovery Key active, initiating the sync process...")
@@ -218,7 +220,7 @@ script loyaltyarmAppDelegate
                             set theResult to runModal()
                         end tell
                     end if
-                    on error
+                on error
                     log "There was an error during this attempt. Check to make sure an existing account's credentials were used on this machine, and that they were entered correctly. Also check to make sure that the /Library/YourCompany folder is present, and that FileVault is not already enabled and needing a restart. Contact your administrator for more information on these steps."
                     theWindow's displayIfNeeded()
                     my fvStatus's setTextColor_(current application's NSColor's redColor)
@@ -233,7 +235,7 @@ script loyaltyarmAppDelegate
                         set theResult to runModal()
                     end tell
                 end try
-                else if theButton as integer = current application's NSAlertThirdButtonReturn as integer then
+            else if theButton as integer = current application's NSAlertThirdButtonReturn as integer then
                 log "User Cancelled Encryption"
                 theWindow's displayIfNeeded()
                 my fvStatus's setTextColor_(current application's NSColor's redColor)
@@ -243,7 +245,7 @@ script loyaltyarmAppDelegate
         end if
     end encryptButton_
     
-    -- Error-checked NSTasks to Set Recovery Key as Custom Property, Sync, Remove the Recovery plist file
+    -- Error-checked Processes to Set Recovery Key as Custom Property, Sync, Remove the Recovery plist file
     on encSuccess_(sender)
         theWindow's displayIfNeeded()
         my fvStatus's setTextColor_(current application's NSColor's blackColor)
@@ -264,11 +266,25 @@ script loyaltyarmAppDelegate
             set taskResult to current application's NSString's alloc()'s initWithData_encoding_(theData, current application's NSUTF8StringEncoding)
             if theTask's terminationStatus() as integer is not 0 then set taskResult to "There was an error"
             if taskResult = "There was an error" then
+                do shell script "cp -R " & plistDir & " " & secureDir with administrator privileges
                 theWindow's displayIfNeeded()
-                my fvStatus's setTextColor_(current application's NSColor's redColor)
-                my fvStatus's setStringValue_("There was an error while syncing with the server!")
-                log "There was an error just before the sync process initiated. Check ePO agent."
-                else
+                current application's NSThread's sleepForTimeInterval_(1)
+                log "There was an error setting the recovery key as a custom property. The ePO agent may need to be re-installed."
+                tell current application's NSAlert to set theAlert to alloc()'s init()
+                tell theAlert
+                    setMessageText_("EscrowtoEPO Encountered An Error")
+                    setInformativeText_("EscrowtoEPO was unable to perform the escrow task because of a problem with the ePO agent. The key has been securely exported.")
+                    addButtonWithTitle_("OK")
+                    setAlertStyle_(2)
+                    set theResult to runModal()
+                end tell
+                syncButton_(me)
+                theWindow's displayIfNeeded()
+                my fvStatus's setTextColor_(current application's NSColor's blackColor)
+                my fvStatus's setStringValue_("Finalizing the process...")
+                current application's NSThread's sleepForTimeInterval_(1)
+                do shell script "rm -rf " & plistDir with administrator privileges
+            else
                 theWindow's displayIfNeeded()
                 my fvStatus's setTextColor_(current application's NSColor's blackColor)
                 my fvStatus's setStringValue_("Synchronizing with the server...")
@@ -281,7 +297,7 @@ script loyaltyarmAppDelegate
                 current application's NSThread's sleepForTimeInterval_(1)
                 do shell script "rm -rf " & plistDir with administrator privileges
             end if
-            on error
+        on error
             theWindow's displayIfNeeded()
             my fvStatus's setTextColor_(current application's NSColor's redColor)
             my fvStatus's setStringValue_("An error occurred during the sync!")
@@ -321,7 +337,7 @@ script loyaltyarmAppDelegate
                 if txt = missing value then
                     log theError
                     spinnerBro's stopAnimation_(spinnerBro)
-                    else
+                else
                     set newlineCharacterSet to current application's NSCharacterSet's newlineCharacterSet()
                     set textParagraphs to txt's componentsSeparatedByString_("\n")
                     set my epoLog to textParagraphs
@@ -349,6 +365,16 @@ script loyaltyarmAppDelegate
 	
 	on applicationShouldTerminate_(sender)
 		-- Insert code here to do any housekeeping before your application quits
+        try
+            do shell script "chmod 755 /Library/McAfee/cma/scratch/etc/" with administrator privileges
+        on error
+            log "EscrowtoEPO (terminating) is unable to change permissions for " & epoFile
+        end try
+        try
+            do shell script "chmod 700 /Library/McAfee/cma/scratch/" with administrator privileges
+        on error
+            log "EscrowtoEPO (terminating) is unable to change permissions for " & epoFile
+        end try
 		return current application's NSTerminateNow
 	end applicationShouldTerminate_
 	
