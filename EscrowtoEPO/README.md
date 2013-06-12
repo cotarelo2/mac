@@ -43,6 +43,10 @@ Initial Release
 --Added alert and check for custom property setting failure
 --Update logging to be more descriptive in certain areas
 
+1.3
+--After receiving an update to the ePO server manager, I noticed that McAfee ePO server console was no longer displaying custom properties singularly, if they were set at different times. "After contacting support, I was told they changed application functions to match the documentation." Prior E2E functionality had the application enable FileVault and set the recovery key, then sync it to the server as CustomProp1. Now, due to the change from McAfee, CustomProp1 is overwritten on the server each time an update to the CustomProps.xml file is noticed during sync. This caused the status script to overwrite CustomProp1 as blank when it synced the encryption status back to the ePO server. As a result, a regular expression was added to the status script to check for the recovery key once it has been set, reassign it at as a custom property, and then initiate a sync.
+--Also edited the status script to change permissions on the McAfee files so they could be edited and change back at the end. This keeps the recovery key out of Console and other places since the status script is now checking the recovery key as described above.
+
 #License
 Copyright 2013 Nick Cobb (contact - loyaltyarm@gmail.com)
 
