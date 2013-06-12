@@ -1,9 +1,5 @@
 #!/bin/sh
 
-CORESTORAGESTATUS="/private/tmp/corestorage.txt"
-ENCRYPTSTATUS="/private/tmp/encrypt_status.txt"
-ENCRYPTDIRECTION="/private/tmp/encrypt_direction.txt"
-
 # Credit to Rich Trouton for developing the initial FV2 Status checking script
 #
 # Get number of CoreStorage devices. The egrep pattern used later in the script
@@ -13,7 +9,40 @@ ENCRYPTDIRECTION="/private/tmp/encrypt_direction.txt"
 # Rich gives credit to Mike Osterman for identifying this problem in the original version of
 # the script and finding a fix for it.
 #
-# Modified for use with ePO system by Nick Cobb, loyaltyarm@gmail.com, 2013.
+# Modified for use with ePO system by Nick Cobb, 2013.
+
+# Change the permissions on /Library/McAfee applicable directories
+sudo chmod 777 /Library/McAfee/cma/scratch/
+sudo chmod 755 /Library/McAfee/cma/scratch/etc
+
+# set plist directory as variable
+secureDir="/usr/local/recoverykeyfailover.plist"
+customDir="/Library/McAfee/cma/scratch/CustomProps.xml"
+
+# set the date for timestamp
+timeStamp=`date`
+
+# Check if RecoveryKey plist exists
+if [ -f $secureDir ]; then
+	echo "The recovery key file exists."
+	echo "Now taking care of business."
+# Read the recovery key
+	recoveryKey=`defaults read $secureDir RecoveryKey`
+# Delete the PLIST file
+	sudo rm -rf $secureDir
+elif [ -f $customDir ]; then
+	echo "Custom Props xml is here."
+	echo "Grabbing the key."
+	recoveryKey=`grep -o "\(\w\{4\}-\)\{5\}\(\w\{4\}\)" /Library/McAfee/cma/scratch/CustomProps.xml`
+else
+	echo "\nThe Recovery plist was not present in the secure directory."
+	echo "The recovery key should have already been uploaded by e2e,"
+	echo "but if not there has been an error."
+fi
+
+CORESTORAGESTATUS="/private/tmp/corestorage.txt"
+ENCRYPTSTATUS="/private/tmp/encrypt_status.txt"
+ENCRYPTDIRECTION="/private/tmp/encrypt_direction.txt"
 
 DEVICE_COUNT=`diskutil cs list | grep -E "^CoreStorage logical volume groups" | awk '{print $5}' | sed -e's/(//'`
 
@@ -38,8 +67,16 @@ if [[ ${osvers} -lt 7 ]]; then
   encStatus="FileVault 2 Encryption Not Available For This Version Of Mac OS X"
   echo "$encStatus"
   # Set ePO custom property for Recovery Key
-  sudo /Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
-  sudo /Library/McAfee/cma/bin/cmdagent -P
+  	if [ -f $secureDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	elif [ -f $customDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	else
+		/Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	fi
 fi
 
 
@@ -56,8 +93,16 @@ if [[ ${osvers} -ge 7 ]]; then
        encStatus="FileVault 2 Encryption Not Enabled"
 	   echo "$encStatus"
 	   # Set ePO custom property for Recovery Key
-	   sudo /Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
-	   sudo /Library/McAfee/cma/bin/cmdagent -P
+	   if [ -f $secureDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	elif [ -f $customDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	else
+		/Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	fi
     fi
     
     # If the Mac is running 10.7 or 10.8 and has CoreStorage volumes,
@@ -102,8 +147,16 @@ if [[ ${osvers} -ge 7 ]]; then
 		      encStatus="FileVault 2 Encryption Complete"
 		      echo "$encStatus"
 			  # Set ePO custom property for Recovery Key
-			  sudo /Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
-			  sudo /Library/McAfee/cma/bin/cmdagent -P
+			  if [ -f $secureDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	elif [ -f $customDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	else
+		/Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	fi
             else
 		      if  grep -iE 'Converting' $ENCRYPTSTATUS 1>/dev/null; then
 		        diskutil cs list | grep -E "$EGREP_STRING\Conversion Direction" | sed -e's/\|//' | awk '{print $3}' >> $ENCRYPTDIRECTION
@@ -111,14 +164,30 @@ if [[ ${osvers} -ge 7 ]]; then
 		            encStatus="FileVault 2 Encryption Proceeding. $CONVERTED of $SIZE Encrypted"
 		            echo "$encStatus"
 				    # Set ePO custom property for Recovery Key
-				    sudo /Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
-				    sudo /Library/McAfee/cma/bin/cmdagent -P
+				    if [ -f $secureDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	elif [ -f $customDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	else
+		/Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	fi
                   else
 		            encStatus="FileVault 2 Encryption Status Unknown. Please check."
 		            echo "$encStatus"
 				    # Set ePO custom property for Recovery Key
-				    sudo /Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
-				    sudo /Library/McAfee/cma/bin/cmdagent -P
+				    if [ -f $secureDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	elif [ -f $customDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	else
+		/Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	fi
 	              fi
                fi
              fi
@@ -129,14 +198,30 @@ if [[ ${osvers} -ge 7 ]]; then
                   encStatus="FileVault 2 Decryption Proceeding. $CONVERTED of $SIZE Decrypted"
                   echo "$encStatus"
 				  # Set ePO custom property for Recovery Key
-				  sudo /Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
-				  sudo /Library/McAfee/cma/bin/cmdagent -P
+				  if [ -f $secureDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	elif [ -f $customDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	else
+		/Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	fi
                 elif grep -iE '-none-' $ENCRYPTDIRECTION 1>/dev/null; then
                   encStatus="FileVault 2 Decryption Completed"
                   echo "$encStatus"
 				  # Set ePO custom property for Recovery Key
-				  sudo /Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
-				  sudo /Library/McAfee/cma/bin/cmdagent -P
+				  if [ -f $secureDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	elif [ -f $customDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	else
+		/Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	fi
                 fi
             fi 
         fi
@@ -153,8 +238,16 @@ fi
 				encStatus="FileVault 2 Encryption Complete"
 				echo "$encStatus"
 				# Set ePO custom property for Recovery Key
-				sudo /Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
-				sudo /Library/McAfee/cma/bin/cmdagent -P
+				if [ -f $secureDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	elif [ -f $customDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	else
+		/Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	fi
             else
 		      if  grep -iE 'No' $ENCRYPTSTATUS 1>/dev/null; then
 		        diskutil cs list | grep -E "$EGREP_STRING\Conversion Direction" | sed -e's/\|//' | awk '{print $3}' >> $ENCRYPTDIRECTION
@@ -162,21 +255,45 @@ fi
 		            encStatus="FileVault 2 Encryption Proceeding. $CONVERTED of $SIZE Encrypted"
 		            echo "$encStatus"
 					# Set ePO custom property for Recovery Key
-					sudo /Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
-					sudo /Library/McAfee/cma/bin/cmdagent -P
+					if [ -f $secureDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	elif [ -f $customDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	else
+		/Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	fi
                   else
 		          if grep -iE 'backward' $ENCRYPTDIRECTION 1>/dev/null; then
                   	    encStatus="FileVault 2 Decryption Proceeding. $CONVERTED of $SIZE Decrypted"
                   	    echo "$encStatus"
 						# Set ePO custom property for Recovery Key
-						sudo /Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
-						sudo /Library/McAfee/cma/bin/cmdagent -P
+						if [ -f $secureDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	elif [ -f $customDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	else
+		/Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	fi
                           elif grep -iE '-none-' $ENCRYPTDIRECTION 1>/dev/null; then
                             encStatus="FileVault 2 Decryption Completed"
                             echo "$encStatus"
 							# Set ePO custom property for Recovery Key
-							sudo /Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
-							sudo /Library/McAfee/cma/bin/cmdagent -P
+							if [ -f $secureDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	elif [ -f $customDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	else
+		/Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	fi
 	              fi
                   fi
                fi
@@ -187,8 +304,16 @@ fi
 		      encStatus="FileVault 2 Encryption Not Enabled"
 		      echo "$encStatus"
 			  # Set ePO custom property for Recovery Key
-			  sudo /Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
-			  sudo /Library/McAfee/cma/bin/cmdagent -P
+			  if [ -f $secureDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	elif [ -f $customDir ]; then
+		/Library/McAfee/cma/bin/msaconfig -CustomProps1 "$recoveryKey" -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	else
+		/Library/McAfee/cma/bin/msaconfig -CustomProps2 "$encStatus"
+		sudo /Library/McAfee/cma/bin/cmdagent -P
+	fi
       fi
 
 # Remove the temp files created during the script
@@ -204,3 +329,8 @@ fi
 if [ -f /private/tmp/encrypt_direction.txt ]; then
    rm /private/tmp/encrypt_direction.txt
 fi
+
+
+# Change the permissions back to normal
+sudo chmod 700 /Library/McAfee/cma/scratch/
+sudo chmod 755 /Library/McAfee/cma/scratch/etc
