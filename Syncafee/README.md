@@ -11,6 +11,7 @@ When troubleshooting with a user/customer or onsite technician, there is little 
 2. McAfee Endpoint Encryption for Mac (EEMac)
 3. OS X Lion (10.7)
 4. OS X Mountain Lion (10.8)
+5. http://cobbservations.wordpress.com/2013/09/03/syncafee-2/
 
 #Future Enhancements
 1. Better idle handling of tasks
@@ -26,6 +27,8 @@ When troubleshooting with a user/customer or onsite technician, there is little 
 #Version History
 1.0 
 Initial Release
+1.1
+Added reversal of permissions
 
 #License
 Copyright 2013 Nick Cobb
